@@ -1,6 +1,6 @@
 {
   "name": "jobflow-ai-monorepo",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "JobFlow AI - End to End AI Job Application & Recruitment Platform",
   "main": "index.js",
   "scripts": {

@@ -13,7 +13,7 @@ import io
 app = FastAPI(
     title="JobFlow AI - Python AI Engine",
     description="Resume parsing, ATS scoring, Job Matching, Cover Letter Generator & AI Interviewer",
-    version="1.0.0"
+    version="1.2.0"
 )
 
 app.add_middleware(
