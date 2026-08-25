@@ -1,0 +1,14 @@
+{
+  "name": "jobflow-ai-monorepo",
+  "version": "1.0.0",
+  "description": "JobFlow AI - End to End AI Job Application & Recruitment Platform",
+  "main": "index.js",
+  "scripts": {
+    "dev:python": "cd backend-python && python3 -m uvicorn app:app --reload --port 5001",
+    "dev:node": "cd backend-node && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

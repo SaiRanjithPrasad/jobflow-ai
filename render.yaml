@@ -1,0 +1,28 @@
+services:
+  # Python AI Microservice on Render
+  - type: web
+    name: jobflow-ai-python
+    env: python
+    region: oregon
+    buildCommand: cd backend-python && pip install -r requirements.txt
+    startCommand: cd backend-python && uvicorn app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.14.0
+
+  # Node.js API Gateway on Render
+  - type: web
+    name: jobflow-ai-node
+    env: node
+    region: oregon
+    buildCommand: cd backend-node && npm install
+    startCommand: cd backend-node && node src/server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 20.0.0
+      - key: MONGO_URI
+        sync: false
+      - key: PYTHON_AI_URL
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
