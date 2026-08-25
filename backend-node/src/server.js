@@ -19,7 +19,12 @@ const PYTHON_AI_URL = process.env.PYTHON_AI_URL || 'http://127.0.0.1:5001';
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY || 'sk_test_51MockStripeKeyForJobFlowAI2026';
 const stripe = new Stripe(STRIPE_SECRET_KEY, { apiVersion: '2023-10-16' });
 
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
+}));
+app.options('*', cors());
 app.use(express.json());
 
 let isMongoConnected = false;

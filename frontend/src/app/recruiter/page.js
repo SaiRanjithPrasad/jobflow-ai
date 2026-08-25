@@ -1,9 +1,16 @@
 'use client';
 import { useState, useEffect } from 'react';
 
-const NODE_API = process.env.NEXT_PUBLIC_NODE_API_URL || 'http://127.0.0.1:5002';
+const getApiUrl = () => {
+  if (process.env.NEXT_PUBLIC_NODE_API_URL) return process.env.NEXT_PUBLIC_NODE_API_URL;
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    return 'https://jobflow-ai-node.onrender.com';
+  }
+  return 'http://localhost:5002';
+};
 
 export default function RecruiterHub() {
+  const NODE_API = getApiUrl();
   const [jobs, setJobs] = useState([]);
   const [applications, setApplications] = useState([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
