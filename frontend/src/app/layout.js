@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
           left: 0,
           width: '100%',
           zIndex: 50,
-          background: 'rgba(255, 255, 255, 0.06)',
+          background: 'rgba(9, 13, 22, 0.75)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           borderBottom: '1px solid rgba(255, 255, 255, 0.12)'
@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
           <div style={{
             maxWidth: '1280px',
             margin: '0 auto',
-            padding: '24px 32px',
+            padding: '20px 32px',
             display: 'grid',
             gridTemplateColumns: 'auto 1fr auto',
             alignItems: 'center',
@@ -98,16 +98,16 @@ export default function RootLayout({ children }) {
 
             {/* Right Col: Pill-shaped CTA Button 'Find my dream' */}
             <div>
-              <Link href="/seeker" className="btn-pill btn-pill-small">
+              <Link href="/seeker" className="btn-pill btn-pill-small btn-pill-white">
                 Find my dream
               </Link>
             </div>
           </div>
         </header>
 
-        <div style={{ paddingTop: '80px' }}>
+        <main style={{ paddingTop: '90px' }}>
           {children}
-        </div>
+        </main>
       </body>
     </html>
   );
