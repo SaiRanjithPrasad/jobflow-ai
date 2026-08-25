@@ -24,20 +24,24 @@ export default function RecruiterHub() {
   const fetchJobs = async () => {
     try {
       const res = await fetch(`${NODE_API}/api/jobs`);
-      const data = await res.json();
-      if (Array.isArray(data)) setJobs(data);
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) setJobs(data);
+      }
     } catch (e) {
-      console.error(e);
+      console.error("fetchJobs error:", e);
     }
   };
 
   const fetchApplications = async () => {
     try {
       const res = await fetch(`${NODE_API}/api/applications`);
-      const data = await res.json();
-      if (Array.isArray(data)) setApplications(data);
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) setApplications(data);
+      }
     } catch (e) {
-      console.error(e);
+      console.error("fetchApplications error:", e);
     }
   };
 
@@ -104,7 +108,7 @@ export default function RecruiterHub() {
           </p>
         </div>
 
-        <button onClick={() => setShowCreateModal(true)} className="btn-primary" style={{ padding: '12px 24px' }}>
+        <button onClick={() => setShowCreateModal(true)} className="btn-pill btn-pill-small" style={{ padding: '12px 24px' }}>
           ➕ Post New AI Job Requisition
         </button>
       </div>
@@ -117,7 +121,7 @@ export default function RecruiterHub() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {jobs.map(job => (
-              <div key={job._id} className="glass-card" style={{ padding: '20px' }}>
+              <div key={job._id} className="glass-card-editorial" style={{ padding: '20px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
                   <h3 style={{ fontSize: '1.1rem', fontWeight: '700' }}>{job.title}</h3>
                   <span className="badge badge-cyan">{job.status}</span>
@@ -142,7 +146,7 @@ export default function RecruiterHub() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {applications.map(app => (
-              <div key={app._id} className="glass-card" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <div key={app._id} className="glass-card-editorial" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <div style={{ fontWeight: '700', fontSize: '1.05rem' }}>{app.seekerName}</div>
@@ -191,28 +195,28 @@ export default function RecruiterHub() {
             <form onSubmit={handleCreateJob} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: '600', marginBottom: '6px' }}>Job Title</label>
-                <input className="input-field" value={title} onChange={e => setTitle(e.target.value)} placeholder="e.g. Senior Full Stack AI Engineer" required />
+                <input className="input-field-editorial" value={title} onChange={e => setTitle(e.target.value)} placeholder="e.g. Senior Full Stack AI Engineer" required />
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: '600', marginBottom: '6px' }}>Company</label>
-                  <input className="input-field" value={company} onChange={e => setCompany(e.target.value)} placeholder="ApexAI Labs" required />
+                  <input className="input-field-editorial" value={company} onChange={e => setCompany(e.target.value)} placeholder="ApexAI Labs" required />
                 </div>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: '600', marginBottom: '6px' }}>Location</label>
-                  <input className="input-field" value={location} onChange={e => setLocation(e.target.value)} placeholder="Remote / New York" />
+                  <input className="input-field-editorial" value={location} onChange={e => setLocation(e.target.value)} placeholder="Remote / New York" />
                 </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: '600', marginBottom: '6px' }}>Salary Range</label>
-                  <input className="input-field" value={salaryRange} onChange={e => setSalaryRange(e.target.value)} placeholder="$150,000 - $190,000" />
+                  <input className="input-field-editorial" value={salaryRange} onChange={e => setSalaryRange(e.target.value)} placeholder="$150,000 - $190,000" />
                 </div>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: '600', marginBottom: '6px' }}>Required Skills (comma separated)</label>
-                  <input className="input-field" value={requiredSkills} onChange={e => setRequiredSkills(e.target.value)} placeholder="React, Next.js, Node.js, Python, MongoDB" />
+                  <input className="input-field-editorial" value={requiredSkills} onChange={e => setRequiredSkills(e.target.value)} placeholder="React, Next.js, Node.js, Python, MongoDB" />
                 </div>
               </div>
 
@@ -223,12 +227,12 @@ export default function RecruiterHub() {
                     ✨ Auto-Generate with AI
                   </button>
                 </div>
-                <textarea className="input-field" rows={5} value={description} onChange={e => setDescription(e.target.value)} placeholder="Describe the responsibilities and technical qualifications..." required />
+                <textarea className="input-field-editorial" rows={5} value={description} onChange={e => setDescription(e.target.value)} placeholder="Describe the responsibilities and technical qualifications..." required />
               </div>
 
               <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end', marginTop: '10px' }}>
                 <button type="button" onClick={() => setShowCreateModal(false)} className="btn-secondary">Cancel</button>
-                <button type="submit" className="btn-primary">🚀 Publish Requisition</button>
+                <button type="submit" className="btn-pill btn-pill-small">🚀 Publish Requisition</button>
               </div>
             </form>
           </div>

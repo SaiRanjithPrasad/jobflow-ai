@@ -42,58 +42,67 @@ export default function SeekerPortal() {
     fetchResumes();
     fetchUserUsage();
 
-    // Check if coming back from Stripe checkout redirect
-    const query = new URLSearchParams(window.location.search);
-    if (query.get('payment') === 'success') {
-      handleStripeSuccessUpgrade();
+    if (typeof window !== 'undefined') {
+      const query = new URLSearchParams(window.location.search);
+      if (query.get('payment') === 'success') {
+        handleStripeSuccessUpgrade();
+      }
     }
   }, []);
 
   const fetchUserUsage = async () => {
     try {
       const res = await fetch(`${NODE_API}/api/user/usage`);
-      const data = await res.json();
-      if (data) setUsage(data);
+      if (res.ok) {
+        const data = await res.json();
+        if (data) setUsage(data);
+      }
     } catch (e) {
-      console.error(e);
+      console.error("fetchUserUsage error:", e);
     }
   };
 
   const fetchJobs = async () => {
     try {
       const res = await fetch(`${NODE_API}/api/jobs`);
-      const data = await res.json();
-      if (Array.isArray(data)) setJobs(data);
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) setJobs(data);
+      }
     } catch (e) {
-      console.error(e);
+      console.error("fetchJobs error:", e);
     }
   };
 
   const fetchApplications = async () => {
     try {
       const res = await fetch(`${NODE_API}/api/applications`);
-      const data = await res.json();
-      if (Array.isArray(data)) setApplications(data);
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) setApplications(data);
+      }
     } catch (e) {
-      console.error(e);
+      console.error("fetchApplications error:", e);
     }
   };
 
   const fetchResumes = async () => {
     try {
       const res = await fetch(`${NODE_API}/api/resumes`);
-      const data = await res.json();
-      if (Array.isArray(data)) {
-        setResumes(data);
-        if (data.length > 0 && !parsedResume) {
-          setParsedResume({
-            extracted_skills: data[0].extractedSkills,
-            ats: { ats_score: data[0].atsScore, feedback: data[0].atsFeedback }
-          });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setResumes(data);
+          if (data.length > 0 && !parsedResume) {
+            setParsedResume({
+              extracted_skills: data[0].extractedSkills,
+              ats: { ats_score: data[0].atsScore, feedback: data[0].atsFeedback }
+            });
+          }
         }
       }
     } catch (e) {
-      console.error(e);
+      console.error("fetchResumes error:", e);
     }
   };
 
@@ -111,14 +120,18 @@ export default function SeekerPortal() {
         return;
       }
 
-      const data = await res.json();
-      if (data.ai) {
-        setParsedResume(data.ai);
-        if (data.usage) setUsage(data.usage);
-        fetchResumes();
+      if (res.ok) {
+        const data = await res.json();
+        if (data.ai) {
+          setParsedResume(data.ai);
+          if (data.usage) setUsage(data.usage);
+          fetchResumes();
+        }
+      } else {
+        alert("Server response error. Please verify backend connection.");
       }
     } catch (e) {
-      alert("Error connecting to Node API Gateway");
+      alert("Error connecting to API Gateway: " + e.message);
     } finally {
       setParsingLoading(false);
     }
@@ -142,11 +155,13 @@ export default function SeekerPortal() {
         return;
       }
 
-      const data = await res.json();
-      if (data.usage) setUsage(data.usage);
-      setJobMatches(prev => ({ ...prev, [job._id]: data }));
+      if (res.ok) {
+        const data = await res.json();
+        if (data.usage) setUsage(data.usage);
+        setJobMatches(prev => ({ ...prev, [job._id]: data }));
+      }
     } catch (e) {
-      console.error(e);
+      console.error("Check match error:", e);
     } finally {
       setMatchLoading(false);
     }
@@ -160,9 +175,11 @@ export default function SeekerPortal() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: 'seeker_demo_1' })
       });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
+      if (res.ok) {
+        const data = await res.json();
+        if (data.url) {
+          window.location.href = data.url;
+        }
       }
     } catch (e) {
       alert("Stripe checkout error");
@@ -178,14 +195,16 @@ export default function SeekerPortal() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: 'seeker_demo_1' })
       });
-      const data = await res.json();
-      if (data.usage) {
-        setUsage(data.usage);
-        setShowPaywall(false);
-        alert("🎉 Stripe Payment Successful! You now have Unlimited JobFlow AI Pro access.");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.usage) {
+          setUsage(data.usage);
+          setShowPaywall(false);
+          alert("🎉 Stripe Payment Successful! You now have Unlimited JobFlow AI Pro access.");
+        }
       }
     } catch (e) {
-      console.error(e);
+      console.error("Stripe upgrade error:", e);
     }
   };
 
@@ -225,7 +244,7 @@ export default function SeekerPortal() {
         fetchApplications();
       }
     } catch (e) {
-      console.error(e);
+      console.error("Kanban update error:", e);
     }
   };
 
@@ -243,10 +262,12 @@ export default function SeekerPortal() {
           job_description: job.description
         })
       });
-      const data = await res.json();
-      if (data.cover_letter) setGeneratedLetter(data.cover_letter);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.cover_letter) setGeneratedLetter(data.cover_letter);
+      }
     } catch (e) {
-      console.error(e);
+      console.error("Cover letter error:", e);
     } finally {
       setLetterLoading(false);
     }
@@ -265,14 +286,16 @@ export default function SeekerPortal() {
           job_description: job.description
         })
       });
-      const data = await res.json();
-      if (data.questions) {
-        setInterviewQuestions(data.questions);
-        setCurrentQuestionIdx(0);
-        setActiveTab('interview');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.questions) {
+          setInterviewQuestions(data.questions);
+          setCurrentQuestionIdx(0);
+          setActiveTab('interview');
+        }
       }
     } catch (e) {
-      console.error(e);
+      console.error("Interview prep error:", e);
     } finally {
       setInterviewLoading(false);
     }
@@ -291,10 +314,12 @@ export default function SeekerPortal() {
           target_role: selectedJob?.title || "Software Engineer"
         })
       });
-      const data = await res.json();
-      setEvalResult(data);
+      if (res.ok) {
+        const data = await res.json();
+        setEvalResult(data);
+      }
     } catch (e) {
-      console.error(e);
+      console.error("Answer eval error:", e);
     }
   };
 
@@ -370,7 +395,7 @@ export default function SeekerPortal() {
               <span className="badge badge-cyan">Trial Uses: {usage.searchCount} / {usage.maxFreeSearches}</span>
             </div>
             <textarea
-              className="input-field"
+              className="input-field-editorial"
               rows={14}
               value={resumeText}
               onChange={(e) => setResumeText(e.target.value)}
@@ -380,7 +405,7 @@ export default function SeekerPortal() {
             <button 
               onClick={handleParseResume} 
               disabled={parsingLoading} 
-              className="btn-primary" 
+              className="btn-pill btn-pill-hero" 
               style={{ width: '100%', justifyContent: 'center' }}>
               {parsingLoading ? '⚡ Python AI Parsing Resume...' : '🔍 Parse Resume with Python AI'}
             </button>
@@ -458,7 +483,7 @@ export default function SeekerPortal() {
             {jobs.map((job) => {
               const matchData = jobMatches[job._id];
               return (
-                <div key={job._id} className="glass-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '16px' }}>
+                <div key={job._id} className="glass-card-editorial" style={{ padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '16px' }}>
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                       <h3 style={{ fontSize: '1.2rem', fontWeight: '700' }}>{job.title}</h3>
@@ -502,7 +527,7 @@ export default function SeekerPortal() {
                     </button>
                     <button 
                       onClick={() => handleApplyToJob(job)} 
-                      className="btn-primary" 
+                      className="btn-pill btn-pill-small" 
                       style={{ flex: 1, justifyContent: 'center', fontSize: '0.85rem' }}>
                       🚀 1-Click Apply
                     </button>
@@ -533,7 +558,7 @@ export default function SeekerPortal() {
                 </div>
 
                 {colApps.map(app => (
-                  <div key={app._id} className="glass-card" style={{ padding: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <div key={app._id} className="glass-card-editorial" style={{ padding: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     <div style={{ fontWeight: '700', fontSize: '0.95rem' }}>{app.jobTitle}</div>
                     <div style={{ fontSize: '0.85rem', color: 'var(--accent-cyan)' }}>{app.company}</div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -582,7 +607,7 @@ export default function SeekerPortal() {
                 <div 
                   key={job._id} 
                   onClick={() => handleGenerateCoverLetter(job)}
-                  className="glass-card" 
+                  className="glass-card-editorial" 
                   style={{
                     padding: '16px',
                     cursor: 'pointer',
@@ -611,7 +636,7 @@ export default function SeekerPortal() {
               </div>
             ) : (
               <textarea
-                className="input-field"
+                className="input-field-editorial"
                 rows={16}
                 value={generatedLetter}
                 onChange={e => setGeneratedLetter(e.target.value)}
@@ -645,7 +670,7 @@ export default function SeekerPortal() {
               <div>
                 <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: '600', marginBottom: '8px' }}>Your Response:</label>
                 <textarea
-                  className="input-field"
+                  className="input-field-editorial"
                   rows={6}
                   value={userAnswer}
                   onChange={e => setUserAnswer(e.target.value)}
@@ -653,7 +678,7 @@ export default function SeekerPortal() {
                 />
               </div>
 
-              <button onClick={handleSubmitAnswer} className="btn-primary" style={{ justifyContent: 'center' }}>
+              <button onClick={handleSubmitAnswer} className="btn-pill btn-pill-hero" style={{ justifyContent: 'center' }}>
                 🤖 Evaluate Response with Python AI
               </button>
 
@@ -670,7 +695,7 @@ export default function SeekerPortal() {
           ) : (
             <div style={{ textAlign: 'center', padding: '40px 0' }}>
               <p style={{ color: 'var(--text-secondary)', marginBottom: '16px' }}>Select a job from the Matcher or Kanban to initiate your mock interview practice session.</p>
-              <button onClick={() => handleStartInterview(jobs[0] || { title: "Full Stack Engineer", description: "React Node Python MongoDB" })} className="btn-primary">
+              <button onClick={() => handleStartInterview(jobs[0] || { title: "Full Stack Engineer", description: "React Node Python MongoDB" })} className="btn-pill btn-pill-hero">
                 🚀 Start Practice for Senior Full Stack AI Engineer
               </button>
             </div>
@@ -722,7 +747,7 @@ export default function SeekerPortal() {
               <button 
                 onClick={handleStripeCheckout} 
                 disabled={stripeLoading} 
-                className="btn-primary" 
+                className="btn-pill btn-pill-hero" 
                 style={{ padding: '14px 28px', fontSize: '1.05rem', justifyContent: 'center' }}>
                 {stripeLoading ? 'Connecting to Stripe Checkout...' : '💳 Pay $29 with Stripe & Upgrade'}
               </button>
