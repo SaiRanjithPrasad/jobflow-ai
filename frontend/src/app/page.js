@@ -17,9 +17,11 @@ export default function Home() {
       try {
         await fetch(`${NODE_API}/api/stats/visit`, { method: 'POST' });
         const res = await fetch(`${NODE_API}/api/stats`);
-        const data = await res.json();
-        if (data && data.totalOutputs) {
-          setStats(data);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.totalOutputs) {
+            setStats(data);
+          }
         }
       } catch (e) {
         console.error(e);
@@ -229,7 +231,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* MINIMALIST EDITORIAL FEATURE SHOWCASE SECTION */}
+      {/* MINIMALIST EDITORIAL FEATURE SHOWCASE SECTION - INTERACTIVE MODULE FLOW */}
       <section style={{
         background: '#ffffff',
         color: 'var(--color-primary-text)',
@@ -250,7 +252,7 @@ export default function Home() {
               display: 'block',
               marginBottom: '12px'
             }}>
-              Curated Intelligence
+              Curated Intelligence Modules
             </span>
             <h2 style={{
               fontFamily: 'var(--font-display)',
@@ -259,7 +261,7 @@ export default function Home() {
               letterSpacing: '-1px',
               lineHeight: 1.1
             }}>
-              Designed for modern software professionals & recruiters
+              Tap any module below to launch directly into action
             </h2>
           </div>
 
@@ -268,71 +270,113 @@ export default function Home() {
             gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
             gap: '32px'
           }}>
-            {/* Feature Card 1 */}
-            <div className="glass-card-editorial" style={{ padding: '40px' }}>
-              <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>01</div>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
-                AI Resume & ATS Parser
-              </h3>
-              <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6 }}>
-                Extract skills, compute 0-100 ATS pass readiness, and receive actionable formatting recommendations powered by Python NLP.
-              </p>
-            </div>
+            {/* Feature Card 01 -> Resume AI */}
+            <Link href="/seeker?tab=resume" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div className="glass-card-editorial" style={{ padding: '40px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer' }}>
+                <div>
+                  <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>01</div>
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
+                    AI Resume & ATS Parser
+                  </h3>
+                  <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6, marginBottom: '24px' }}>
+                    Extract skills, compute 0-100 ATS pass readiness, and receive actionable formatting recommendations powered by Python NLP.
+                  </p>
+                </div>
+                <div style={{ fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: 600, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  Launch Resume AI <span style={{ transition: 'transform 0.2s' }}>→</span>
+                </div>
+              </div>
+            </Link>
 
-            {/* Feature Card 2 */}
-            <div className="glass-card-editorial" style={{ padding: '40px' }}>
-              <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>02</div>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
-                TF-IDF Cosine Matcher
-              </h3>
-              <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6 }}>
-                Vector match candidate skills against job requisitions to compute precise percentage alignment and keyword gaps.
-              </p>
-            </div>
+            {/* Feature Card 02 -> Job Matcher */}
+            <Link href="/seeker?tab=jobs" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div className="glass-card-editorial" style={{ padding: '40px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer' }}>
+                <div>
+                  <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>02</div>
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
+                    TF-IDF Cosine Matcher
+                  </h3>
+                  <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6, marginBottom: '24px' }}>
+                    Vector match candidate skills against job requisitions to compute precise percentage alignment and keyword gaps.
+                  </p>
+                </div>
+                <div style={{ fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: 600, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  Launch Job Matcher <span style={{ transition: 'transform 0.2s' }}>→</span>
+                </div>
+              </div>
+            </Link>
 
-            {/* Feature Card 3 */}
-            <div className="glass-card-editorial" style={{ padding: '40px' }}>
-              <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>03</div>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
-                1-Click Cover Letters
-              </h3>
-              <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6 }}>
-                Synthesize tailored cover letters customized for target role responsibilities and company culture in seconds.
-              </p>
-            </div>
+            {/* Feature Card 03 -> Cover Letter */}
+            <Link href="/seeker?tab=cover" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div className="glass-card-editorial" style={{ padding: '40px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer' }}>
+                <div>
+                  <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>03</div>
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
+                    1-Click Cover Letters
+                  </h3>
+                  <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6, marginBottom: '24px' }}>
+                    Synthesize tailored cover letters customized for target role responsibilities and company culture in seconds.
+                  </p>
+                </div>
+                <div style={{ fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: 600, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  Generate Cover Letter <span style={{ transition: 'transform 0.2s' }}>→</span>
+                </div>
+              </div>
+            </Link>
 
-            {/* Feature Card 4 */}
-            <div className="glass-card-editorial" style={{ padding: '40px' }}>
-              <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>04</div>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
-                Kanban Pipeline Tracker
-              </h3>
-              <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6 }}>
-                Track applications across Saved, Applied, Interviewing, Offer, and Rejected stages backed by MongoDB Atlas cloud persistence.
-              </p>
-            </div>
+            {/* Feature Card 04 -> Kanban Pipeline */}
+            <Link href="/seeker?tab=kanban" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div className="glass-card-editorial" style={{ padding: '40px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer' }}>
+                <div>
+                  <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>04</div>
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
+                    Kanban Pipeline Tracker
+                  </h3>
+                  <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6, marginBottom: '24px' }}>
+                    Track applications across Saved, Applied, Interviewing, Offer, and Rejected stages backed by MongoDB Atlas cloud persistence.
+                  </p>
+                </div>
+                <div style={{ fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: 600, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  Open Kanban Board <span style={{ transition: 'transform 0.2s' }}>→</span>
+                </div>
+              </div>
+            </Link>
 
-            {/* Feature Card 5 */}
-            <div className="glass-card-editorial" style={{ padding: '40px' }}>
-              <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>05</div>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
-                AI Mock Interview Simulator
-              </h3>
-              <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6 }}>
-                Practice role-specific technical questions and receive real-time scoring (1-10) with detailed performance feedback.
-              </p>
-            </div>
+            {/* Feature Card 05 -> AI Mock Interview */}
+            <Link href="/seeker?tab=interview" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div className="glass-card-editorial" style={{ padding: '40px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer' }}>
+                <div>
+                  <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>05</div>
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
+                    AI Mock Interview Simulator
+                  </h3>
+                  <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6, marginBottom: '24px' }}>
+                    Practice role-specific technical questions and receive real-time scoring (1-10) with detailed performance feedback.
+                  </p>
+                </div>
+                <div style={{ fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: 600, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  Start Practice <span style={{ transition: 'transform 0.2s' }}>→</span>
+                </div>
+              </div>
+            </Link>
 
-            {/* Feature Card 6 */}
-            <div className="glass-card-editorial" style={{ padding: '40px' }}>
-              <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>06</div>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
-                Stripe Monetization & Free Trial
-              </h3>
-              <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6 }}>
-                Includes 2 free trial searches out of the box with Stripe Checkout paywall session for $29/mo Unlimited Pro Pass.
-              </p>
-            </div>
+            {/* Feature Card 06 -> Recruiter Hub */}
+            <Link href="/recruiter" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div className="glass-card-editorial" style={{ padding: '40px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer' }}>
+                <div>
+                  <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>06</div>
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
+                    Recruiter Job Creator
+                  </h3>
+                  <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6, marginBottom: '24px' }}>
+                    Post new job requisitions with AI description generation and review candidate application fit rankings.
+                  </p>
+                </div>
+                <div style={{ fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: 600, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  Open Recruiter Hub <span style={{ transition: 'transform 0.2s' }}>→</span>
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </section>

@@ -1,10 +1,14 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 const NODE_API = process.env.NEXT_PUBLIC_NODE_API_URL || 'http://127.0.0.1:5002';
 
-export default function SeekerPortal() {
-  const [activeTab, setActiveTab] = useState('resume');
+function SeekerContent() {
+  const searchParams = useSearchParams();
+  const initialTab = searchParams.get('tab') || 'resume';
+  
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [jobs, setJobs] = useState([]);
   const [applications, setApplications] = useState([]);
   const [resumes, setResumes] = useState([]);
@@ -35,6 +39,13 @@ export default function SeekerPortal() {
   const [userAnswer, setUserAnswer] = useState("");
   const [evalResult, setEvalResult] = useState(null);
   const [interviewLoading, setInterviewLoading] = useState(false);
+
+  useEffect(() => {
+    const tabParam = searchParams.get('tab');
+    if (tabParam) {
+      setActiveTab(tabParam);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     fetchJobs();
@@ -769,5 +780,13 @@ export default function SeekerPortal() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function SeekerPortal() {
+  return (
+    <Suspense fallback={<div style={{ padding: '60px', textAlign: 'center', color: '#fff' }}>Loading Seeker Portal...</div>}>
+      <SeekerContent />
+    </Suspense>
   );
 }
