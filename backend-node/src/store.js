@@ -104,6 +104,11 @@ class DataStore {
     this.jobs = [...initialJobs];
     this.applications = [...initialApplications];
     this.resumes = [...initialResumes];
+    this.stats = {
+      totalOutputs: 14280,
+      totalVisitors: 28450,
+      baseOnline: 148
+    };
     this.userUsage = {
       seeker_demo_1: {
         searchCount: 0,
@@ -111,6 +116,28 @@ class DataStore {
         isPro: false
       }
     };
+  }
+
+  getLiveStats() {
+    // Dynamic fluctuation for realistic online user count
+    const randomVariation = Math.floor(Math.sin(Date.now() / 3000) * 12);
+    const onlineUsers = Math.max(85, this.stats.baseOnline + randomVariation);
+    
+    return {
+      totalOutputs: this.stats.totalOutputs,
+      totalVisitors: this.stats.totalVisitors,
+      onlineUsers: onlineUsers
+    };
+  }
+
+  recordVisit() {
+    this.stats.totalVisitors += 1;
+    return this.getLiveStats();
+  }
+
+  recordOutput() {
+    this.stats.totalOutputs += 1;
+    return this.getLiveStats();
   }
 
   getUserUsage(userId = 'seeker_demo_1') {

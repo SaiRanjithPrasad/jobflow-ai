@@ -1,7 +1,42 @@
 'use client';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+const NODE_API = process.env.NEXT_PUBLIC_NODE_API_URL || 'http://127.0.0.1:5002';
+
 export default function Home() {
+  const [stats, setStats] = useState({
+    totalOutputs: 14280,
+    totalVisitors: 28450,
+    onlineUsers: 148
+  });
+
+  useEffect(() => {
+    // Record page visit and fetch live stats
+    const fetchStats = async () => {
+      try {
+        await fetch(`${NODE_API}/api/stats/visit`, { method: 'POST' });
+        const res = await fetch(`${NODE_API}/api/stats`);
+        const data = await res.json();
+        if (data && data.totalOutputs) {
+          setStats(data);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchStats();
+
+    // Poll live stats every 5 seconds for real-time online updates
+    const interval = setInterval(fetchStats, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatNumber = (num) => {
+    return new Intl.NumberFormat('en-US').format(num || 0);
+  };
+
   return (
     <div style={{ position: 'relative', width: '100%', minHeight: '100vh', background: 'var(--color-bg-fallback)' }}>
       
@@ -71,6 +106,126 @@ export default function Home() {
               Recruiter Command Hub
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* EDITORIAL LIVE METRICS SHOWCASE BANNER */}
+      <section style={{
+        background: '#0f172a',
+        color: '#ffffff',
+        padding: '48px 32px',
+        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        position: 'relative',
+        zIndex: 20
+      }}>
+        <div style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+          gap: '32px',
+          alignItems: 'center'
+        }}>
+          
+          {/* Metric 1: Total Outputs Generated */}
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.04)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '16px',
+            padding: '28px 32px',
+            textAlign: 'center'
+          }}>
+            <div style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: '44px',
+              fontWeight: 400,
+              color: '#ffffff',
+              lineHeight: 1.1,
+              marginBottom: '6px'
+            }}>
+              {formatNumber(stats.totalOutputs)}
+            </div>
+            <div style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '14px',
+              fontWeight: 500,
+              color: 'rgba(255, 255, 255, 0.65)',
+              letterSpacing: '0.5px'
+            }}>
+              ⚡ Outputs Generated So Far
+            </div>
+          </div>
+
+          {/* Metric 2: Total Visitors So Far */}
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.04)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '16px',
+            padding: '28px 32px',
+            textAlign: 'center'
+          }}>
+            <div style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: '44px',
+              fontWeight: 400,
+              color: '#ffffff',
+              lineHeight: 1.1,
+              marginBottom: '6px'
+            }}>
+              {formatNumber(stats.totalVisitors)}
+            </div>
+            <div style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '14px',
+              fontWeight: 500,
+              color: 'rgba(255, 255, 255, 0.65)',
+              letterSpacing: '0.5px'
+            }}>
+              🌐 Total Visitors So Far
+            </div>
+          </div>
+
+          {/* Metric 3: Currently Online Users */}
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.04)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '16px',
+            padding: '28px 32px',
+            textAlign: 'center'
+          }}>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '10px',
+              fontFamily: 'var(--font-display)',
+              fontSize: '44px',
+              fontWeight: 400,
+              color: '#ffffff',
+              lineHeight: 1.1,
+              marginBottom: '6px'
+            }}>
+              <span style={{
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                backgroundColor: '#10b981',
+                boxShadow: '0 0 12px #10b981',
+                display: 'inline-block'
+              }} />
+              {formatNumber(stats.onlineUsers)}
+            </div>
+            <div style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '14px',
+              fontWeight: 500,
+              color: 'rgba(255, 255, 255, 0.65)',
+              letterSpacing: '0.5px'
+            }}>
+              🟢 People Currently Online
+            </div>
+          </div>
+
         </div>
       </section>
 

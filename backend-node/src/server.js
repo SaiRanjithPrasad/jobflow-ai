@@ -82,6 +82,15 @@ app.get('/api/db/export', async (req, res) => {
   }
 });
 
+// Live Stats Metrics Endpoint
+app.get('/api/stats', (req, res) => {
+  res.json(store.getLiveStats());
+});
+
+app.post('/api/stats/visit', (req, res) => {
+  res.json(store.recordVisit());
+});
+
 // =====================================
 // STRIPE & FREE TRIAL USAGE ENDPOINTS
 // =====================================
@@ -240,6 +249,7 @@ app.post('/api/resumes/parse', async (req, res) => {
 
     // Increment usage counter upon successful parse
     const updatedUsage = store.incrementSearchCount(userId);
+    store.recordOutput();
 
     const resumePayload = {
       userId,
