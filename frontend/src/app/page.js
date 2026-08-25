@@ -95,7 +95,7 @@ export default function Home() {
             margin: '0 auto 48px',
             textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)'
           }}>
-            Automate your resume ATS scoring, cosine vector job matching, custom cover letter synthesis, and AI mock interview preparation in one seamless, high-fashion experience.
+            Build an ATS-ready resume, discover jobs matching your true skills, generate custom cover letters, and master interviews with real-time feedback.
           </p>
 
           {/* Large Pill Action Button - Stagger 2 (Delay 0.4s), padding 20px 56px, 16px Medium */}
