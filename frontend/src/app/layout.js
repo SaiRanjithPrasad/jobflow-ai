@@ -2,8 +2,8 @@ import './globals.css';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'JobFlow AI - End to End AI Job & Recruitment Platform',
-  description: 'AI-powered resume parsing, job matching, cover letter tailoring, and mock interview simulator.',
+  title: 'JobFlow AI® — Minimalist AI Recruitment & Career Intelligence',
+  description: 'A minimalist, high-end cinematic career platform powered by Next.js, Python AI, and MongoDB Atlas.',
 };
 
 export default function RootLayout({ children }) {
@@ -11,56 +11,103 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <header style={{
-          background: 'rgba(10, 13, 20, 0.85)',
-          backdropFilter: 'blur(12px)',
-          borderBottom: '1px solid var(--border-subtle)',
-          position: 'sticky',
+          position: 'fixed',
           top: 0,
+          left: 0,
+          width: '100%',
           zIndex: 50,
-          padding: '14px 28px'
+          background: 'rgba(255, 255, 255, 0.06)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.12)'
         }}>
           <div style={{
             maxWidth: '1280px',
             margin: '0 auto',
-            display: 'flex',
+            padding: '24px 32px',
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr auto',
             alignItems: 'center',
-            justifyContent: 'space-between'
+            gap: '24px'
           }}>
-            <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <div style={{
-                width: '38px',
-                height: '38px',
-                borderRadius: '10px',
-                background: 'var(--gradient-accent)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontWeight: '800',
-                color: '#fff',
-                fontSize: '1.2rem',
-                boxShadow: '0 0 15px rgba(6, 182, 212, 0.4)'
+            {/* Left Col: Brand Logo in Instrument Serif at 30px */}
+            <Link href="/" style={{ textDecoration: 'none', color: '#ffffff' }}>
+              <span style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: '30px',
+                fontWeight: 400,
+                letterSpacing: '-0.5px',
+                display: 'inline-flex',
+                alignItems: 'baseline'
               }}>
-                ⚡
-              </div>
-              <span style={{ fontSize: '1.35rem', fontWeight: '800', letterSpacing: '-0.02em', color: '#fff' }}>
-                JobFlow<span style={{ color: 'var(--accent-cyan)' }}>.AI</span>
+                JobFlow AI<sup style={{ fontSize: '13px', marginLeft: '2px' }}>®</sup>
               </span>
             </Link>
 
-            <nav style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-              <Link href="/seeker" className="btn-secondary" style={{ textDecoration: 'none', fontSize: '0.9rem' }}>
-                💼 Job Seeker Portal
+            {/* Center Col: 4 Links (Inter 14px Medium, 40px spacing) */}
+            <nav style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '40px'
+            }}>
+              <Link href="/seeker" style={{
+                color: '#ffffff',
+                textDecoration: 'none',
+                fontFamily: 'var(--font-body)',
+                fontSize: '14px',
+                fontWeight: 500,
+                opacity: 0.9,
+                transition: 'opacity 0.2s ease'
+              }}>
+                Job Seeker
               </Link>
-              <Link href="/recruiter" className="btn-primary" style={{ textDecoration: 'none', fontSize: '0.9rem' }}>
-                🎯 Recruiter Hub
+              <Link href="/recruiter" style={{
+                color: '#ffffff',
+                textDecoration: 'none',
+                fontFamily: 'var(--font-body)',
+                fontSize: '14px',
+                fontWeight: 500,
+                opacity: 0.9,
+                transition: 'opacity 0.2s ease'
+              }}>
+                Recruiter Hub
+              </Link>
+              <Link href="/seeker?tab=resume" style={{
+                color: '#ffffff',
+                textDecoration: 'none',
+                fontFamily: 'var(--font-body)',
+                fontSize: '14px',
+                fontWeight: 500,
+                opacity: 0.9,
+                transition: 'opacity 0.2s ease'
+              }}>
+                ATS Analyzer
+              </Link>
+              <Link href="/seeker?tab=interview" style={{
+                color: '#ffffff',
+                textDecoration: 'none',
+                fontFamily: 'var(--font-body)',
+                fontSize: '14px',
+                fontWeight: 500,
+                opacity: 0.9,
+                transition: 'opacity 0.2s ease'
+              }}>
+                AI Mock Interview
               </Link>
             </nav>
+
+            {/* Right Col: Pill-shaped CTA Button 'Find my dream' */}
+            <div>
+              <Link href="/seeker" className="btn-pill btn-pill-small">
+                Find my dream
+              </Link>
+            </div>
           </div>
         </header>
 
-        <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '32px 24px' }}>
+        <div style={{ paddingTop: '80px' }}>
           {children}
-        </main>
+        </div>
       </body>
     </html>
   );

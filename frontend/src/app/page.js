@@ -3,95 +3,212 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '48px', padding: '20px 0' }}>
-      {/* Hero Section */}
-      <section className="glass-panel" style={{ padding: '60px 40px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+    <div style={{ position: 'relative', width: '100%', minHeight: '100vh', background: 'var(--color-bg-fallback)' }}>
+      
+      {/* FULL-BLEED CINEMATIC VIDEO BACKGROUND HERO */}
+      <section style={{
+        position: 'relative',
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        padding: '120px 24px 80px'
+      }}>
+        
+        {/* Video Background Layer */}
+        <div className="video-background-wrapper">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            src="https://designerstephen.github.io/public-assets/videos/serene-art-hero.mp4"
+          />
+          <div className="video-dark-overlay" />
+        </div>
+
+        {/* Hero Content Area - Centered & Layered over Video */}
         <div style={{
-          position: 'absolute',
-          top: '-50%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '600px',
-          height: '300px',
-          background: 'var(--gradient-glow)',
-          filter: 'blur(80px)',
-          borderRadius: '50%',
-          pointerEvents: 'none'
-        }} />
+          position: 'relative',
+          zIndex: 10,
+          maxWidth: '1280px',
+          width: '100%',
+          margin: '0 auto',
+          textAlign: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          
+          {/* H1 - Stagger 0 (Delay 0s), Instrument Serif 80px, -2.46px letter-spacing */}
+          <h1 className="hero-title fade-rise stagger-0" style={{ maxWidth: '1050px', marginBottom: '28px' }}>
+            Elevate your career journey with <em>Cinematic AI Intelligence</em>
+          </h1>
 
-        <div className="badge badge-cyan" style={{ marginBottom: '16px', fontSize: '0.85rem', padding: '6px 16px' }}>
-          ✨ Powered by Next.js, Node.js, Python AI & MongoDB
-        </div>
+          {/* Subtext Paragraph - Stagger 1 (Delay 0.2s), Max-width 670px, Line-height 1.625 */}
+          <p className="fade-rise stagger-1" style={{
+            fontFamily: 'var(--font-body)',
+            fontSize: '18px',
+            fontWeight: 400,
+            color: 'rgba(255, 255, 255, 0.88)',
+            maxWidth: '670px',
+            lineHeight: 1.625,
+            margin: '0 auto 48px',
+            textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)'
+          }}>
+            Automate your resume ATS scoring, cosine vector job matching, custom cover letter synthesis, and AI mock interview preparation in one seamless, high-fashion experience.
+          </p>
 
-        <h1 style={{ fontSize: '3.2rem', fontWeight: '800', lineHeight: 1.15, marginBottom: '20px', letterSpacing: '-0.03em' }}>
-          Supercharge Your Job Search & Hiring Flow with <span className="gradient-text">JobFlow AI</span>
-        </h1>
-
-        <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', maxWidth: '760px', margin: '0 auto 36px', lineHeight: 1.6 }}>
-          Automate your resume ATS scoring, job skill matching, cover letter generation, Kanban application tracking, and AI mock interview preparation in one seamless intelligent system.
-        </p>
-
-        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/seeker" className="btn-primary" style={{ textDecoration: 'none', padding: '14px 32px', fontSize: '1.05rem' }}>
-            🚀 Launch Seeker Portal
-          </Link>
-          <Link href="/recruiter" className="btn-secondary" style={{ textDecoration: 'none', padding: '14px 28px', fontSize: '1.05rem' }}>
-            📋 Post Jobs & Rank Applicants
-          </Link>
+          {/* Large Pill Action Button - Stagger 2 (Delay 0.4s), padding 20px 56px, 16px Medium */}
+          <div className="fade-rise stagger-2" style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Link href="/seeker" className="btn-pill btn-pill-hero btn-pill-white">
+              Find my dream
+            </Link>
+            
+            <Link href="/recruiter" className="btn-pill btn-pill-hero" style={{ background: 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
+              Recruiter Command Hub
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Feature Cards Grid */}
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
-        <div className="glass-card" style={{ padding: '28px' }}>
-          <div style={{ fontSize: '2rem', marginBottom: '12px' }}>📄</div>
-          <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '8px' }}>AI Resume & ATS Parser</h3>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-            Python NLP engine extracts skills, computes ATS readiness score, and identifies formatting and keyword improvements.
-          </p>
-        </div>
+      {/* MINIMALIST EDITORIAL FEATURE SHOWCASE SECTION */}
+      <section style={{
+        background: '#ffffff',
+        color: 'var(--color-primary-text)',
+        padding: '100px 32px',
+        position: 'relative',
+        zIndex: 20
+      }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+          
+          <div style={{ textAlign: 'center', marginBottom: '72px' }}>
+            <span style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '13px',
+              fontWeight: 600,
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              color: 'var(--color-muted-text)',
+              display: 'block',
+              marginBottom: '12px'
+            }}>
+              Curated Intelligence
+            </span>
+            <h2 style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: '48px',
+              fontWeight: 400,
+              letterSpacing: '-1px',
+              lineHeight: 1.1
+            }}>
+              Designed for modern software professionals & recruiters
+            </h2>
+          </div>
 
-        <div className="glass-card" style={{ padding: '28px' }}>
-          <div style={{ fontSize: '2rem', marginBottom: '12px' }}>🎯</div>
-          <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '8px' }}>Cosine Job Matcher</h3>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-            TF-IDF vector matching measures your skill alignment against job postings, revealing exact skill matches & gaps.
-          </p>
-        </div>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '32px'
+          }}>
+            {/* Feature Card 1 */}
+            <div className="glass-card-editorial" style={{ padding: '40px' }}>
+              <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>01</div>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
+                AI Resume & ATS Parser
+              </h3>
+              <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6 }}>
+                Extract skills, compute 0-100 ATS pass readiness, and receive actionable formatting recommendations powered by Python NLP.
+              </p>
+            </div>
 
-        <div className="glass-card" style={{ padding: '28px' }}>
-          <div style={{ fontSize: '2rem', marginBottom: '12px' }}>✍️</div>
-          <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '8px' }}>1-Click Cover Letters</h3>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-            Instant AI cover letter synthesis tailored specifically to company values, target role, and candidate highlights.
-          </p>
-        </div>
+            {/* Feature Card 2 */}
+            <div className="glass-card-editorial" style={{ padding: '40px' }}>
+              <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>02</div>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
+                TF-IDF Cosine Matcher
+              </h3>
+              <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6 }}>
+                Vector match candidate skills against job requisitions to compute precise percentage alignment and keyword gaps.
+              </p>
+            </div>
 
-        <div className="glass-card" style={{ padding: '28px' }}>
-          <div style={{ fontSize: '2rem', marginBottom: '12px' }}>📊</div>
-          <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '8px' }}>Kanban Pipeline</h3>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-            Track application progression across Saved, Applied, Interviewing, Offer, and Rejected stages with MongoDB state persistence.
-          </p>
-        </div>
+            {/* Feature Card 3 */}
+            <div className="glass-card-editorial" style={{ padding: '40px' }}>
+              <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>03</div>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
+                1-Click Cover Letters
+              </h3>
+              <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6 }}>
+                Synthesize tailored cover letters customized for target role responsibilities and company culture in seconds.
+              </p>
+            </div>
 
-        <div className="glass-card" style={{ padding: '28px' }}>
-          <div style={{ fontSize: '2rem', marginBottom: '12px' }}>🎙️</div>
-          <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '8px' }}>AI Mock Interviewer</h3>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-            Interactive AI interview practice with real-time technical evaluation, scoring (1-10), and actionable improvement tips.
-          </p>
+            {/* Feature Card 4 */}
+            <div className="glass-card-editorial" style={{ padding: '40px' }}>
+              <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>04</div>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
+                Kanban Pipeline Tracker
+              </h3>
+              <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6 }}>
+                Track applications across Saved, Applied, Interviewing, Offer, and Rejected stages backed by MongoDB Atlas cloud persistence.
+              </p>
+            </div>
+
+            {/* Feature Card 5 */}
+            <div className="glass-card-editorial" style={{ padding: '40px' }}>
+              <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>05</div>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
+                AI Mock Interview Simulator
+              </h3>
+              <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6 }}>
+                Practice role-specific technical questions and receive real-time scoring (1-10) with detailed performance feedback.
+              </p>
+            </div>
+
+            {/* Feature Card 6 */}
+            <div className="glass-card-editorial" style={{ padding: '40px' }}>
+              <div style={{ fontSize: '32px', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>06</div>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: 400, marginBottom: '12px' }}>
+                Stripe Monetization & Free Trial
+              </h3>
+              <p style={{ color: 'var(--color-muted-text)', fontSize: '15px', lineHeight: 1.6 }}>
+                Includes 2 free trial searches out of the box with Stripe Checkout paywall session for $29/mo Unlimited Pro Pass.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Footer status bar */}
-      <footer className="glass-panel" style={{ padding: '20px 28px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-        <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-          JobFlow AI © 2026 • Next.js + Node.js (Port 5002) + Python AI (Port 5001) + MongoDB
-        </div>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <span className="badge badge-match-high">🟢 Node API Online</span>
-          <span className="badge badge-purple">🟣 Python AI Active</span>
+      {/* MINIMALIST EDITORIAL FOOTER */}
+      <footer style={{
+        background: '#0f172a',
+        color: '#ffffff',
+        padding: '60px 32px 40px',
+        borderTop: '1px solid rgba(255, 255, 255, 0.1)'
+      }}>
+        <div style={{
+          maxWidth: '1280px',
+          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '24px'
+        }}>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: '24px' }}>
+            JobFlow AI<sup style={{ fontSize: '10px' }}>®</sup>
+          </div>
+          <div style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.6)' }}>
+            Next.js + Node.js (Port 5002) + Python AI (Port 5001) + MongoDB Atlas
+          </div>
+          <div style={{ display: 'flex', gap: '16px' }}>
+            <Link href="/seeker" className="btn-pill btn-pill-small btn-pill-white">
+              Launch Portal
+            </Link>
+          </div>
         </div>
       </footer>
     </div>
