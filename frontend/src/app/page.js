@@ -81,7 +81,7 @@ export default function Home() {
           
           {/* H1 - Stagger 0 (Delay 0s), Instrument Serif 80px, -2.46px letter-spacing */}
           <h1 className="hero-title fade-rise stagger-0" style={{ maxWidth: '1050px', marginBottom: '28px' }}>
-            Elevate your career journey with <em>Cinematic AI Intelligence</em>
+            Elevate your career journey with <em>Next-Gen AI Career Intelligence</em>
           </h1>
 
           {/* Subtext Paragraph - Stagger 1 (Delay 0.2s), Max-width 670px, Line-height 1.625 */}
