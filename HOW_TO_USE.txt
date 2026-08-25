@@ -1,0 +1,111 @@
+# HOW TO USE JOBFLOW AI®
+================================================================================
+JobFlow AI® — End-to-End AI Job Application & Recruitment Intelligence Platform
+Version: v1.2.0
+
+================================================================================
+1. PLATFORM OVERVIEW & VALUE PROPOSITION
+================================================================================
+JobFlow AI® is a full-stack, AI-powered platform designed to streamline both 
+ends of the hiring process: career management for job seekers and candidate 
+sourcing for recruiters.
+
+It integrates:
+- Next.js 14 React Minimalist Editorial Frontend
+- Node.js Express API Gateway with MongoDB Atlas Cloud Persistence
+- Python FastAPI Microservice for TF-IDF Cosine Match Vectors & NLP Parsing
+- Stripe Payment Gateway with 2 Free Trial Searches & $29/mo Pro Pass
+
+
+================================================================================
+2. WHO IS JOBFLOW AI HELPFUL FOR?
+================================================================================
+
+[A] JOB SEEKERS & SOFTWARE ENGINEERS
+------------------------------------
+* Common Challenges:
+  - Resumes get silently rejected by automated Applicant Tracking Systems (ATS).
+  - Writing customized cover letters for dozens of applications is time-consuming.
+  - Uncertainty about which skills match a job posting vs. what keywords are missing.
+  - Nervousness during technical and behavioral interviews.
+
+* How JobFlow AI Helps:
+  1. AI Resume Parser & ATS Score Gauge: Instantly analyzes plain text/PDF 
+     resumes, gives a 0-100 ATS readiness score, extracts skills, and provides 
+     actionable formatting recommendations.
+  2. Cosine Vector Job Matcher: Compares your resume against job postings using 
+     scikit-learn TF-IDF vector math to show exact matched skills vs missing keywords.
+  3. 1-Click Tailored Cover Letters: Synthesizes high-converting cover letters 
+     customized for the target company and role requirements in seconds.
+  4. Kanban Application Pipeline Tracker: Organizes applications across 5 stages 
+     (Saved, Applied, Interviewing, Offer Received, Closed) with cloud state persistence.
+  5. Interactive AI Mock Interviewer: Generates targeted technical/behavioral 
+     questions for your specific job role and evaluates typed answers (score 1-10 
+     plus improvement tips).
+
+
+[B] RECRUITERS, HR MANAGERS & HIRING TEAMS
+------------------------------------------
+* Common Challenges:
+  - Spending hours manually reviewing hundreds of unranked candidate resumes.
+  - Difficulty drafting detailed technical job descriptions quickly.
+  - Fragmented candidate tracking across spreadsheets.
+
+* How JobFlow AI Helps:
+  1. AI Job Requisition Generator: Auto-generates comprehensive technical job 
+     descriptions with required skill tags in 1 click.
+  2. Automated Candidate Ranking: Automatically ranks applicants by AI Match 
+     Score percentage, highlighting top-tier candidates immediately.
+  3. Centralized Candidate Pipeline: Track applicant progression from screening to 
+     final offer.
+
+
+[C] FREELANCERS & CONTRACT CONSULTANTS
+--------------------------------------
+* How JobFlow AI Helps:
+  - Quickly tailor proposals and resumes for multiple client requisitions to 
+    maximize acceptance rates.
+
+
+================================================================================
+3. STEP-BY-STEP USER GUIDE
+================================================================================
+
+FOR JOB SEEKERS:
+----------------
+Step 1: Open the Seeker Portal at http://localhost:3000/seeker
+Step 2: Go to "Resume AI" -> Paste your resume text -> Click "Parse Resume".
+        Review your ATS score, extracted skill tags, and formatting feedback.
+Step 3: Go to "AI Job Matcher" -> Browse active job postings.
+        Click "AI Cosine Match" to see your match percentage and missing keywords.
+Step 4: Click "1-Click Apply" to add the job to your Kanban tracker.
+Step 5: Go to "Cover Letter" -> Select the target job -> Click "Generate Cover Letter".
+Step 6: Go to "AI Interview" -> Select your target job -> Click "Start Practice".
+        Answer the questions and click "Evaluate Response" to get AI scoring (1-10).
+
+FOR RECRUITERS:
+---------------
+Step 1: Open the Recruiter Hub at http://localhost:3000/recruiter
+Step 2: Click "Post New AI Job Requisition".
+Step 3: Enter Job Title -> Click "Auto-Generate with AI" to generate the description.
+Step 4: Click "Publish Requisition" to make it live for candidates.
+Step 5: View the "AI-Ranked Applicants" column to inspect top-matching candidates.
+
+
+================================================================================
+4. PRICING & FREE TRIAL MODEL
+================================================================================
+- Free Trial: 2 Free AI Searches included out of the box per user.
+- Stripe Paywall: On the 3rd search attempt, an interactive Stripe Checkout 
+  paywall modal is triggered for the $29/month JobFlow AI Pro Unlimited Pass.
+
+
+================================================================================
+5. RUNNING LOCALLY & DEPLOYMENT
+================================================================================
+- Frontend: http://localhost:3000 (Next.js 14) -> Deploy to Vercel
+- Node Backend: http://localhost:5002 (Express + Mongoose) -> Deploy to Render
+- Python AI Engine: http://localhost:5001 (FastAPI) -> Deploy to Render
+- Cloud Database: MongoDB Atlas (mongodb+srv://...)
+
+For full deployment steps, refer to deployment_guide.md in the project root.
