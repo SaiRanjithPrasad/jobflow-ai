@@ -47,6 +47,14 @@ function SeekerContent() {
   const [evalResult, setEvalResult] = useState(null);
   const [interviewLoading, setInterviewLoading] = useState(false);
 
+  // PathFinder AI state
+  const [passions, setPassions] = useState("AI Automation, Full Stack Web Dev, Clean Architecture");
+  const [userSkills, setUserSkills] = useState("JavaScript, React, Node.js, Python, MongoDB");
+  const [targetDomain, setTargetDomain] = useState("AI SaaS & High-Growth Tech");
+  const [targetSalary, setTargetSalary] = useState("$150,000 - $190,000");
+  const [pathfinderResult, setPathfinderResult] = useState(null);
+  const [pathfinderLoading, setPathfinderLoading] = useState(false);
+
   useEffect(() => {
     const tabParam = searchParams.get('tab');
     if (tabParam) {
@@ -341,6 +349,30 @@ function SeekerContent() {
     }
   };
 
+  const handleRunPathFinder = async () => {
+    setPathfinderLoading(true);
+    try {
+      const res = await fetch(`${NODE_API}/api/ai/pathfinder`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          passions,
+          skills: userSkills,
+          market_domain: targetDomain,
+          target_salary: targetSalary
+        })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setPathfinderResult(data);
+      }
+    } catch (e) {
+      console.error("PathFinder error:", e);
+    } finally {
+      setPathfinderLoading(false);
+    }
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
       {/* Header Banner */}
@@ -400,6 +432,12 @@ function SeekerContent() {
             className={activeTab === 'interview' ? 'btn-primary' : 'btn-secondary'}
             style={{ padding: '8px 16px', fontSize: '0.88rem' }}>
             🎙️ AI Interview
+          </button>
+          <button 
+            onClick={() => setActiveTab('pathfinder')} 
+            className={activeTab === 'pathfinder' ? 'btn-primary' : 'btn-secondary'}
+            style={{ padding: '8px 16px', fontSize: '0.88rem' }}>
+            🧭 PathFinder AI
           </button>
         </div>
       </div>
@@ -718,6 +756,148 @@ function SeekerContent() {
               </button>
             </div>
           )}
+        </div>
+      )}
+
+      {/* TAB 6: PATHFINDER AI CAREER SWITCHER */}
+      {activeTab === 'pathfinder' && (
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '28px' }}>
+          {/* Left Column: 4-Pillar Input Controls */}
+          <div className="glass-panel" style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div>
+              <span className="badge badge-purple" style={{ marginBottom: '10px' }}>🧭 PathFinder AI Module</span>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '8px' }}>Tired of your current role?</h2>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: '1.5' }}>
+                Discover your ideal career path — align your passions, skills, and target salary to switch paths with confidence.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: '600', marginBottom: '6px' }}>❤️ What You Love (Passions & Interests)</label>
+                <input 
+                  className="input-field-editorial" 
+                  value={passions} 
+                  onChange={e => setPassions(e.target.value)} 
+                  placeholder="e.g. AI Automation, UI Design, Problem Solving"
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: '600', marginBottom: '6px' }}>⚡ What You're Good At (Skills & Strengths)</label>
+                <input 
+                  className="input-field-editorial" 
+                  value={userSkills} 
+                  onChange={e => setUserSkills(e.target.value)} 
+                  placeholder="e.g. JavaScript, React, Python, Communication"
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: '600', marginBottom: '6px' }}>🌐 Target Market Domain</label>
+                <input 
+                  className="input-field-editorial" 
+                  value={targetDomain} 
+                  onChange={e => setTargetDomain(e.target.value)} 
+                  placeholder="e.g. AI Tech, SaaS, FinTech"
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: '600', marginBottom: '6px' }}>💰 Target Salary Goal</label>
+                <input 
+                  className="input-field-editorial" 
+                  value={targetSalary} 
+                  onChange={e => setTargetSalary(e.target.value)} 
+                  placeholder="e.g. $150,000 - $190,000"
+                />
+              </div>
+
+              <button 
+                onClick={handleRunPathFinder} 
+                disabled={pathfinderLoading} 
+                className="btn-pill btn-pill-hero" 
+                style={{ justifyContent: 'center', marginTop: '8px' }}>
+                {pathfinderLoading ? '⚡ Python AI Calculating Pathfinder...' : '🧭 Discover My New Career Path'}
+              </button>
+            </div>
+          </div>
+
+          {/* Right Column: Pathfinder Career Blueprint */}
+          <div className="glass-panel" style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <h2 style={{ fontSize: '1.4rem', fontWeight: '800' }}>Your PathFinder Blueprint</h2>
+
+            {pathfinderResult ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                {/* Score & Verdict Banner */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '24px', background: 'rgba(6, 182, 212, 0.08)', padding: '20px', borderRadius: '16px', border: '1px solid var(--border-active)' }}>
+                  <div style={{
+                    width: '90px',
+                    height: '90px',
+                    borderRadius: '50%',
+                    background: 'conic-gradient(#10b981 0% 93%, rgba(255, 255, 255, 0.1) 93% 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 0 20px rgba(16, 185, 129, 0.3)'
+                  }}>
+                    <div style={{
+                      width: '74px',
+                      height: '74px',
+                      borderRadius: '50%',
+                      background: '#0f172a',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontWeight: '800',
+                      fontSize: '1.4rem',
+                      color: '#34d399'
+                    }}>
+                      {pathfinderResult.alignment_score}%
+                    </div>
+                  </div>
+
+                  <div>
+                    <div style={{ fontSize: '1.15rem', fontWeight: '700', marginBottom: '4px' }}>Fulfillment & Income Fit</div>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>{pathfinderResult.verdict}</div>
+                  </div>
+                </div>
+
+                {/* Recommended Pivot Roles */}
+                <div>
+                  <h3 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '12px' }}>🎯 Recommended Pivot Roles:</h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    {(pathfinderResult.pivot_roles || []).map((pivot, idx) => (
+                      <div key={idx} className="glass-card-editorial" style={{ padding: '16px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                          <span style={{ fontWeight: '700', fontSize: '1rem' }}>{pivot.role}</span>
+                          <span className="badge badge-match-high">{pivot.match_score}% Match</span>
+                        </div>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '8px' }}>{pivot.description}</p>
+                        <div style={{ fontSize: '0.85rem', color: 'var(--accent-cyan)', fontWeight: '600' }}>
+                          💰 Expected Compensation: {pivot.est_salary}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Monetization Blueprint */}
+                <div style={{ background: 'rgba(255, 255, 255, 0.04)', padding: '20px', borderRadius: '14px', border: '1px solid var(--border-subtle)' }}>
+                  <h3 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '10px' }}>🚀 Monetization Action Blueprint:</h3>
+                  <ul style={{ paddingLeft: '18px', color: 'var(--text-secondary)', fontSize: '0.9rem', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {(pathfinderResult.monetization_blueprint || []).map((step, idx) => (
+                      <li key={idx}>{step}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--text-muted)' }}>
+                Fill in your passions, skills, and salary goal on the left, then click <strong>"Discover My New Career Path"</strong> to generate your personalized Pathfinder Blueprint.
+              </div>
+            )}
+          </div>
         </div>
       )}
 

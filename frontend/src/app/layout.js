@@ -94,6 +94,17 @@ export default function RootLayout({ children }) {
               }}>
                 AI Mock Interview
               </Link>
+              <Link href="/seeker?tab=pathfinder" style={{
+                color: '#ffffff',
+                textDecoration: 'none',
+                fontFamily: 'var(--font-body)',
+                fontSize: '14px',
+                fontWeight: 500,
+                opacity: 0.9,
+                transition: 'opacity 0.2s ease'
+              }}>
+                PathFinder AI
+              </Link>
             </nav>
 
             {/* Right Col: Pill-shaped CTA Button 'Find my dream' */}

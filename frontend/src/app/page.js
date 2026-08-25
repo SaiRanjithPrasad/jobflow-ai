@@ -474,7 +474,7 @@ export default function Home() {
             JobFlow AI<sup style={{ fontSize: '10px' }}>®</sup>
           </div>
           <div style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.6)' }}>
-            JobFlow AI <span style={{ color: '#10b981', fontWeight: 600 }}>v1.2.0</span> • Next.js + Node.js (Port 5002) + Python AI (Port 5001) + MongoDB Atlas
+            JobFlow AI <span style={{ color: '#10b981', fontWeight: 600 }}>v1.3.0</span> • Next.js + Node.js (Port 5002) + Python AI (Port 5001) + MongoDB Atlas
           </div>
           <div style={{ display: 'flex', gap: '16px' }}>
             <Link href="/seeker" className="btn-pill btn-pill-small btn-pill-white">

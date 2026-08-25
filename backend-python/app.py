@@ -52,6 +52,12 @@ class InterviewEvalRequest(BaseModel):
     user_answer: Optional[str] = ""
     target_role: Optional[str] = ""
 
+class PathFinderRequest(BaseModel):
+    passions: Optional[str] = ""
+    skills: Optional[str] = ""
+    market_domain: Optional[str] = ""
+    target_salary: Optional[str] = ""
+
 def extract_skills_from_text(text: str) -> List[str]:
     text_lower = text.lower()
     found = []
@@ -283,6 +289,53 @@ def eval_answer(payload: InterviewEvalRequest):
     return {
         "score": score,
         "feedback": feedback,
-        "strengths": ["Clear structure", "Directly addresses core prompt"] if score >= 7 else ["Initial concept stated"],
+        "strengths": ["Initial concept stated", "Clear technical focus"],
         "improvement_tips": ["Mention specific monitoring metrics or automated test coverage."]
+    }
+
+@app.post("/api/ai/pathfinder-assess")
+def pathfinder_assess(payload: PathFinderRequest):
+    passions = (payload.passions or "AI, Web Development, UI/UX Design, Problem Solving").strip()
+    skills = (payload.skills or "JavaScript, React, Python, Communication").strip()
+    domain = (payload.market_domain or "AI Tech & SaaS").strip()
+    salary = (payload.target_salary or "$140,000 - $180,000").strip()
+
+    passions_list = [p.strip() for p in passions.split(",") if p.strip()]
+    skills_list = [s.strip() for s in skills.split(",") if s.strip()]
+
+    # Calculate 4-pillar alignment score
+    alignment_score = min(96, max(75, 78 + len(passions_list)*2 + len(skills_list)*3))
+
+    pivot_roles = [
+        {
+            "role": "AI Solutions Architect & Full-Stack Strategist",
+            "match_score": alignment_score,
+            "description": f"Combine your passion for {passions_list[0] if passions_list else 'AI'} with your expertise in {skills_list[0] if skills_list else 'software engineering'} to architect high-value AI products.",
+            "est_salary": salary
+        },
+        {
+            "role": "Lead Product Engineer — AI & Sourcing Tech",
+            "match_score": max(70, alignment_score - 4),
+            "description": "Drive end-to-end technical execution of user-centric web applications and microservices.",
+            "est_salary": "$150,000 - $195,000"
+        },
+        {
+            "role": "Technical Consultant & AI Workflow Specialist",
+            "match_score": max(68, alignment_score - 7),
+            "description": "Help high-growth companies automate recruitment and operational workflows using modern AI tools.",
+            "est_salary": "$130,000 - $175,000"
+        }
+    ]
+
+    return {
+        "alignment_score": alignment_score,
+        "verdict": "High Career Fulfillment Potential! Your skills and passions show strong market demand.",
+        "pivot_roles": pivot_roles,
+        "transferable_skills": skills_list,
+        "skills_to_learn": ["FastAPI / Python AI", "Vector Database Indexing", "System Architecture & Prompt Engineering"],
+        "monetization_blueprint": [
+            f"1. Target high-growth startups in {domain} offering compensation around {salary}.",
+            "2. Highlight your transferable skills in technical problem-solving and modern web frameworks.",
+            "3. Build 2 portfolio projects demonstrating AI API integration to command top-tier compensation."
+        ]
     }

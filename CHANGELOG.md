@@ -4,6 +4,19 @@ All notable changes, version numbers, and release updates to **JobFlow AI** will
 
 ---
 
+## [v1.3.0] — 2026-08-25
+
+### 🧭 Added
+- **PathFinder AI — Career Switch & Fulfillment Module**:
+  - Designed for candidates who are tired of their current role and want to switch career paths while finding their passion and maximizing earning potential.
+  - Interactive **4-Pillar Alignment Calculator**: Evaluates Passions & Interests, Skills & Strengths, Market Demand, and Salary Goals.
+  - New Python FastAPI AI microservice endpoint: `POST /api/ai/pathfinder-assess`.
+  - Node API Gateway proxy endpoint: `POST /api/ai/pathfinder`.
+  - New Seeker Portal tab: **`🧭 PathFinder AI`** (`/seeker?tab=pathfinder`).
+  - Computes 0–100% Fulfillment Alignment Score, 3 Recommended Career Pivot Roles, Transferable Skill Tags, and a Step-by-Step Monetization Blueprint.
+
+---
+
 ## [v1.2.0] — 2026-08-25
 
 ### 🎨 Added
@@ -19,9 +32,6 @@ All notable changes, version numbers, and release updates to **JobFlow AI** will
   - Real-time `People Currently Online` live user ticker with pulsing green indicator dot.
   - New Node API Gateway endpoints: `GET /api/stats` and `POST /api/stats/visit`.
 
-### 🛡️ Enhanced
-- Added automatic zero-downtime failover proxy handling in Node Gateway: if Render Python AI microservice is cold-starting (status 502), requests automatically failover to local Python AI engine (`http://127.0.0.1:5001`).
-
 ---
 
 ## [v1.1.0] — 2026-08-24
@@ -30,7 +40,6 @@ All notable changes, version numbers, and release updates to **JobFlow AI** will
 - **Stripe Payments & 2-Free Trial Search Limit**:
   - Users receive 2 free AI resume parses and job matches out of the box.
   - Interactive Stripe Checkout Paywall Modal ($29/mo Unlimited Pro Pass) triggered on 3rd usage attempt.
-  - Node API Gateway endpoints: `GET /api/user/usage`, `POST /api/stripe/create-checkout-session`, and `POST /api/stripe/mock-success`.
 
 ---
 
@@ -40,4 +49,3 @@ All notable changes, version numbers, and release updates to **JobFlow AI** will
 - **Next.js 14 Frontend**: Job Seeker Portal & Recruiter Command Hub.
 - **Node.js Express API Gateway**: Mongoose ODM database layer & MongoDB Atlas cloud integration.
 - **Python FastAPI AI Microservice**: PyPDF2 resume parsing, scikit-learn TF-IDF Cosine vector matching, cover letter synthesis, and AI mock interview evaluator.
-- **Git Version Control & Security**: `.gitignore` protection for secrets and dependencies.

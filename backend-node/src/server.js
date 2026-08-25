@@ -403,6 +403,16 @@ app.post('/api/ai/eval-answer', async (req, res) => {
   }
 });
 
+app.post('/api/ai/pathfinder', async (req, res) => {
+  try {
+    const aiData = await callPythonAi('/api/ai/pathfinder-assess', req.body);
+    store.recordOutput();
+    res.json(aiData);
+  } catch (err) {
+    res.status(500).json({ error: 'Python AI PathFinder service error', details: err.message });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`[JobFlow AI Node Gateway] Listening on http://localhost:${PORT}`);
 });
